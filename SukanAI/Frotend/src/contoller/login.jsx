@@ -8,19 +8,15 @@ import { auth } from "../utils/firebase";
 import api from "../utils/axios";
 
 export default function Login() {
- 
-
-
-
-
 
   const handleData = async (token) => {
     try {
-      const { data } = await api.post("/auth/login", {
+      console.log("hello")
+      const  {data}  = await api.post("/auth/login", {
         token
       });
      
-
+      console.log(data)
       console.log("LOGIN SUCCESS:", data.user);
 
     } catch (error) {
@@ -34,16 +30,15 @@ export default function Login() {
 
   const googleAuth = async () => {
   try {
-    console.log("1. click hua");
+
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
-    console.log("2. popup success", result.user.email);
+   
 
     const token = await result.user.getIdToken();
-    console.log("3. token mila");
+    handleData(token);
 
-    const { data } = await api.post("/auth/login", { token });
-    console.log("4. backend success", data);
+   
   } catch (err) {
     console.log("ERROR CODE:", err.code);
     console.log("ERROR MSG:", err.message);
